@@ -11,7 +11,7 @@ Specifically it will:
 - Convert pitch/roll/yaw to degrees
 
 ## Building
-- You need .Net 5.0 SDK installed
+- You need .Net 5.0 SDK installed. https://dotnet.microsoft.com/
 - Run build.bat, it will produce .\build\OpenTx2Dashware.exe
 
 ##Usage
