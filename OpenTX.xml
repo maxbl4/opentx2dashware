@@ -1,0 +1,50 @@
+<DataProfile version="2" readOnly="False" startFinishDistanceThreshold="40" showDistanceThreshold="True" ignoreFirstLap="True" ignoreLastLap="True" lapTimeHoldSecs="5" isChaseCamData="False" isAimData="False" isDriftBoxData="False" sortByTime="False" autoSync="False" autoSyncOffset="0">
+  <HeaderLines>
+    <HeaderLineIndex>0</HeaderLineIndex>
+  </HeaderLines>
+  <DataStartLineIndex>1</DataStartLineIndex>
+  <DataValueSeparators>;	</DataValueSeparators>
+  <UseEuroDecimalFormat>True</UseEuroDecimalFormat>
+  <FileLineMatchers>
+    <FileLineMatcher dataLineIndex="0" matchText="Timecode;Timestamp;Lat;Long;DistanceToHome;DistanceTraveled;Date;Time;1RSS(dB);RQly(%);RSNR(dB);RFMD;TRSS(dB);TQly(%);TSNR(dB);RxBt(V);Curr(A);Capa(mAh);Bat_(%);Ptch(rad);Roll(rad);Yaw(rad);GPS;GSpd(kmh);Hdg(@);Alt(m);Sats;Rud;Ele;Thr;Ail;TxBat(V);SA;SB;SC;SD" matchMode="Contains" ignoreCase="False" />
+  </FileLineMatchers>
+  <Calculators>
+    <DegreesToCartesianConverter inputUnit="Degrees" outputUnit="Meters" algorithm="SphericalMercator">
+      <InputColumns>
+        <InputColumn>Lat</InputColumn>
+        <InputColumn>Long</InputColumn>
+      </InputColumns>
+      <OutputColumns>
+        <OutputColumn>GPS_X</OutputColumn>
+        <OutputColumn>GPS_Y</OutputColumn>
+      </OutputColumns>
+    </DegreesToCartesianConverter>
+    <LapSummaryCalculator>
+      <InputColumns>
+        <InputColumn>DistanceToHome</InputColumn>
+      </InputColumns>
+      <OutputColumns>
+        <OutputColumn>
+        </OutputColumn>
+        <OutputColumn>DistanceToHome_MAX</OutputColumn>
+        <OutputColumn>
+        </OutputColumn>
+      </OutputColumns>
+    </LapSummaryCalculator>
+  </Calculators>
+  <ColumnMappings>
+    <ColumnMapping inputColumnText="Timecode" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="&lt;Required&gt;" dataType="Data Running Time, Seconds" />
+    <ColumnMapping inputColumnText="Alt(m)" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="Positional" dataType="Altitude / Z Position (Meters)" />
+    <ColumnMapping inputColumnText="DistanceToHome" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="Positional" dataType="Distance from Beginning (Meters)" />
+    <ColumnMapping inputColumnText="Ptch(rad)" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="Positional" dataType="Pitch" />
+    <ColumnMapping inputColumnText="GSpd(kmh)" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="Velocity" dataType="Speed (KPH)" />
+    <ColumnMapping inputColumnText="Lat" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="Positional" dataType="Latitude / Y Position (Degrees)" />
+    <ColumnMapping inputColumnText="Long" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="Positional" dataType="Longitude / X Position (Degrees)" />
+    <ColumnMapping inputColumnText="DistanceTraveled" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="Positional" dataType="Distance (Meters)" />
+    <ColumnMapping inputColumnText="GPS_X" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="Positional" dataType="Longitude / X Position (Meters)" />
+    <ColumnMapping inputColumnText="GPS_Y" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="Positional" dataType="Latitude / Y Position (Meters)" />
+    <ColumnMapping inputColumnText="DistanceToHome_MAX" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="Positional" dataType="Distance from Beginning Max (Meters)" />
+    <ColumnMapping inputColumnText="RxBt(V)" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="Engine, Transmission" dataType="Battery Voltage" />
+    <ColumnMapping inputColumnText="Curr(A)" inputColumnMatchMode="ExactMatch" inputColumnIgnoreCase="False" dataCategory="Engine, Transmission" dataType="Engine Load" />
+  </ColumnMappings>
+</DataProfile>
