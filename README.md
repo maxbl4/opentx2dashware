@@ -16,3 +16,6 @@ Specifically it will:
 
 ##Usage
 Just run OpenTx2Dashware.exe in the directory where you have OpenTx logs, it will try to convert every CSV it finds. It will also split individual flights from log, when there are 5+ seconds between log lines
+
+##NB
+The included sample.csv is synthesized, this is not a real flight
