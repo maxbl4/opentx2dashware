@@ -14,8 +14,10 @@ namespace OpenTx2Dashware
     {
         static void Main(string[] args)
         {
+            new DJISrtConverter().Run();
             var files = Directory.GetFiles(".\\", "*.csv")
                 .Where(x => !Path.GetFileNameWithoutExtension(x).EndsWith("_dashware"))
+                .Where(x => !Path.GetFileNameWithoutExtension(x).StartsWith("DJIG"))
                 .ToList();
             Console.WriteLine($"Found {files.Count} files to process");
             foreach (var file in files)
