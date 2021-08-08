@@ -1,6 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTx2Dashware", "OpenTx2Dashware.csproj", "{B4F204C2-E6C9-4B3B-A40B-2980EABACDE1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTx2Dashware", "Lib\OpenTx2Dashware.csproj", "{B4F204C2-E6C9-4B3B-A40B-2980EABACDE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parser", "Parser\Parser.csproj", "{F4638DED-13C5-4259-ABB9-97D91780078A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Merger", "Merger\Merger.csproj", "{F2204CA7-EEA0-4ADF-980F-5336B5DD0709}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +16,13 @@ Global
 		{B4F204C2-E6C9-4B3B-A40B-2980EABACDE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4F204C2-E6C9-4B3B-A40B-2980EABACDE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4F204C2-E6C9-4B3B-A40B-2980EABACDE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4638DED-13C5-4259-ABB9-97D91780078A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4638DED-13C5-4259-ABB9-97D91780078A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4638DED-13C5-4259-ABB9-97D91780078A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4638DED-13C5-4259-ABB9-97D91780078A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2204CA7-EEA0-4ADF-980F-5336B5DD0709}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2204CA7-EEA0-4ADF-980F-5336B5DD0709}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2204CA7-EEA0-4ADF-980F-5336B5DD0709}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2204CA7-EEA0-4ADF-980F-5336B5DD0709}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

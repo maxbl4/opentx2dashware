@@ -9,7 +9,7 @@ namespace OpenTx2Dashware
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public List<LogRow> Rows { get; set; } = new();
-        public string DJIPrefix { get; set; }
+        public string NamePrefix { get; set; }
         public TimeSpan Duration => TimeSpan.FromSeconds(Rows.LastOrDefault()?.Timecode ?? 0);
 
         public void UpdateTimestamps()

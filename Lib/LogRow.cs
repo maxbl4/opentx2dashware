@@ -72,7 +72,10 @@ namespace OpenTx2Dashware
         public int SC { get; set; }
         [Name("SD")]
         public int SD { get; set; }
-        public int Delay { get; set; }
-        public double Bitrate { get; set; }
+        public int DJI_Signal { get; set; }
+        public int DJI_Channel { get; set; }
+        public int DJI_Delay { get; set; }
+        public double DJI_GoggleBattery { get; set; }
+        public double DJI_Bitrate { get; set; }
     }
 }

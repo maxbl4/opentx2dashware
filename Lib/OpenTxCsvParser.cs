@@ -15,9 +15,11 @@ namespace OpenTx2Dashware
         public IEnumerable<Log> Run()
         {
             var files = Directory.GetFiles(".\\", "*.csv")
-                .Where(x => !Path.GetFileNameWithoutExtension(x).EndsWith("_dashware"))
+                .Where(x => !Path.GetFileNameWithoutExtension(x).EndsWith("_parsed"))
+                .Where(x => !Path.GetFileNameWithoutExtension(x).EndsWith("_merged"))
                 .Where(x => !Path.GetFileNameWithoutExtension(x).StartsWith("DJIG"))
                 .ToList();
+            Console.WriteLine($"Found {files.Count} CSV files to process");
             foreach (var file in files)
             {
                 var rows = LoadRows(file);
@@ -34,6 +36,7 @@ namespace OpenTx2Dashware
                 {
                     if (prevRow == null || (row.Timestamp - prevRow.Timestamp).TotalSeconds > 5)
                     {
+                        Console.Write(".");
                         flightIndex++;
                         startTimestamp = row.Timestamp;
                         home = row.Position;
@@ -45,7 +48,8 @@ namespace OpenTx2Dashware
 
                         log = new Log
                         {
-                            StartTime = startTimestamp
+                            StartTime = startTimestamp,
+                            NamePrefix = Path.GetFileNameWithoutExtension(file)
                         };
                     }
                     else
@@ -73,16 +77,17 @@ namespace OpenTx2Dashware
                     log.EndTime = prevRow.Timestamp;
                     yield return log;
                 }
-                
             }
+            Console.WriteLine();
         }
 
-        private List<LogRow> LoadRows(string file)
+        public static List<LogRow> LoadRows(string file, CultureInfo cultureInfo = null)
         {
+            cultureInfo ??= CultureInfo.InvariantCulture;
             try
             {
                 using var sr = new StreamReader(file);
-                using var csvReader = new CsvReader(sr, new CsvConfiguration(CultureInfo.InvariantCulture)
+                using var csvReader = new CsvReader(sr, new CsvConfiguration(cultureInfo)
                 {
                     HeaderValidated = null,
                     MissingFieldFound = null
@@ -96,11 +101,24 @@ namespace OpenTx2Dashware
 
             return new List<LogRow>();
         }
+        
+        public static void WriteLog(string fileName, IEnumerable<LogRow> rows)
+        {
+            using var csvWriter = new CsvWriter(new StreamWriter(fileName), 
+                new CsvConfiguration(CultureInfo.CurrentCulture));
+            csvWriter.WriteHeader<LogRow>();
+            csvWriter.NextRecord();
+            foreach (var r in rows)
+            {
+                csvWriter.WriteRecord(r);
+                csvWriter.NextRecord();
+            }
+        }
 
         public void ConvertAll()
         {
             var files = Directory.GetFiles(".\\", "*.csv")
-                .Where(x => !Path.GetFileNameWithoutExtension(x).EndsWith("_dashware"))
+                .Where(x => !Path.GetFileNameWithoutExtension(x).EndsWith("_parsed"))
                 .Where(x => !Path.GetFileNameWithoutExtension(x).StartsWith("DJIG"))
                 .ToList();
             Console.WriteLine($"Found {files.Count} files to process");
@@ -136,7 +154,7 @@ namespace OpenTx2Dashware
                         startTimestamp = row.Timestamp;
                         home = row.Position;
                         var outputName =
-                            $"{Path.GetFileNameWithoutExtension(file)}_{flightIndex:00}_{row.Timestamp:yyyy-MM-dd_HH-mm-ss}_dashware.csv";
+                            $"{Path.GetFileNameWithoutExtension(file)}_{flightIndex:00}_{row.Timestamp:yyyy-MM-dd_HH-mm-ss}_parsed.csv";
                         Console.WriteLine($"Creating output {outputName}");
                         csvWriter = new CsvWriter(new StreamWriter(outputName), 
                             new CsvConfiguration(CultureInfo.CurrentCulture));

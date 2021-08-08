@@ -3,6 +3,7 @@
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <TargetFramework>net5.0</TargetFramework>
+        <AssemblyName>fl-parser</AssemblyName>
         <PublishSingleFile>true</PublishSingleFile>
         <SelfContained>false</SelfContained>
         <RuntimeIdentifier>win-x64</RuntimeIdentifier>
@@ -11,17 +12,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="CsvHelper" Version="27.1.1" />
-      <PackageReference Include="GPS" Version="2.0.2" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Update="sample.csv">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="DJIG0036.srt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
+      <ProjectReference Include="..\Lib\OpenTx2Dashware.csproj" />
     </ItemGroup>
 
 </Project>

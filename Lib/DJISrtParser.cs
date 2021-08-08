@@ -10,14 +10,16 @@ namespace OpenTx2Dashware
     {
         public IEnumerable<Log> Run()
         {
-            var files = Directory.GetFiles(".\\", "DJIG*.srt").ToList();
+            var files = Directory.GetFiles(".\\", "DJIG*.srt")
+                .Where(x => !Path.GetFileNameWithoutExtension(x).EndsWith("_parsed"))
+                .ToList();
             Console.WriteLine($"Found {files.Count} SRT files to process");
             var logs = files.Select(file =>
             {
                 var log = new Log
                 {
                     EndTime = File.GetLastWriteTime(file),
-                    DJIPrefix = Path.GetFileNameWithoutExtension(file)
+                    NamePrefix = Path.GetFileNameWithoutExtension(file)
                 };
                 using var sr = new StreamReader(file);
                 while (true)
@@ -39,17 +41,25 @@ namespace OpenTx2Dashware
                         {
                             Time = DateTime.MinValue + ts,
                             Timecode = int.Parse(fields["flightTime"]),
-                            Delay = int.Parse(fields["delay"].Substring(0, fields["delay"].Length - 2)),
-                            Bitrate = double.Parse(fields["bitrate"].Substring(0, fields["bitrate"].Length - 4),
+                            DJI_Signal = int.Parse(fields["signal"]), 
+                            DJI_Channel = int.Parse(fields["ch"]), 
+                            RxBattery = double.Parse(fields["uavBat"].Substring(0, fields["uavBat"].Length - 1),
+                                CultureInfo.InvariantCulture), 
+                            DJI_GoggleBattery = double.Parse(fields["glsBat"].Substring(0, fields["glsBat"].Length - 1),
+                                CultureInfo.InvariantCulture), 
+                            DJI_Delay = int.Parse(fields["delay"].Substring(0, fields["delay"].Length - 2)),
+                            DJI_Bitrate = double.Parse(fields["bitrate"].Substring(0, fields["bitrate"].Length - 4),
                                 CultureInfo.InvariantCulture),
                         });
                 }
 
                 log.UpdateTimestamps();
+                Console.Write(".");
                 return log;
             })
                 .Where(x => x.Rows.Count > 0)
                 .ToList();
+            Console.WriteLine();
             var startLog = logs.FirstOrDefault();
             var combinedLogs = new List<Log>();
             if (startLog != null)
