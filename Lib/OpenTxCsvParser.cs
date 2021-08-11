@@ -12,6 +12,8 @@ namespace OpenTx2Dashware
 {
     public class OpenTxCsvParser
     {
+        public int SecondsBetweenFlights { get; set; } = 5;
+        
         public IEnumerable<Log> Run()
         {
             var files = Directory.GetFiles(".\\", "*.csv")
@@ -34,7 +36,7 @@ namespace OpenTx2Dashware
                 LogRow prevRow = null;
                 foreach (var row in rows)
                 {
-                    if (prevRow == null || (row.Timestamp - prevRow.Timestamp).TotalSeconds > 5)
+                    if (prevRow == null || (row.Timestamp - prevRow.Timestamp).TotalSeconds > SecondsBetweenFlights)
                     {
                         Console.Write(".");
                         flightIndex++;
@@ -146,7 +148,7 @@ namespace OpenTx2Dashware
                 LogRow prevRow = null;
                 foreach (var row in rows)
                 {
-                    if (prevRow == null || (row.Timestamp - prevRow.Timestamp).TotalSeconds > 5)
+                    if (prevRow == null || (row.Timestamp - prevRow.Timestamp).TotalSeconds > SecondsBetweenFlights)
                     {
                         flightIndex++;
                         if (csvWriter != null)

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using CsvHelper;
-using CsvHelper.Configuration;
 using OpenTx2Dashware;
 
 namespace Parser
@@ -14,7 +10,10 @@ namespace Parser
         {
             Console.WriteLine("Parsing files....");
             var djiLogs = new DJISrtParser().Run().ToList();
-            var openTxLogs = new OpenTxCsvParser().Run().ToList();
+            if (!(args.Length > 0 && int.TryParse(args[0], out var secondsBetweenFlights)))
+                secondsBetweenFlights = 5;
+            
+            var openTxLogs = new OpenTxCsvParser{SecondsBetweenFlights = secondsBetweenFlights}.Run().ToList();
             Console.WriteLine("Writing output");
             foreach (var log in djiLogs.Concat(openTxLogs))
             {
